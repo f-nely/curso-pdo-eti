@@ -15,10 +15,15 @@ try {
   /* $sql = "INSERT INTO products (name, description) VALUES ('Copo', 'Descartável')";
   $insert = $pdo->exec($sql); */
 
-  $name = 'Gravador';
+  /* $name = 'Gravador';
   $description = 'Portátil';
-  $update = $pdo->exec("UPDATE products SET name = '{$name}',description ='{$description}' WHERE id <> 5");
-  var_dump($update);
+  $update = $pdo->exec("UPDATE products SET name = '{$name}',description ='{$description}' WHERE id <> 5"); */
+  $query = $pdo->query("SELECT * FROM products");
+  $products = $query->fetchAll();
+  foreach ($products as $product) {
+    echo $product['name'] . '<br>';
+  }
+  //var_dump($query->fetchAll());
 
 } catch (Throwable | PDOException $e) {
 
