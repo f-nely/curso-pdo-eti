@@ -12,20 +12,21 @@ try {
   $pdo = new PDO("{$dsn}:host={$host};port={$port};dbname={$database}", $user, $password);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $name = 'Microondas';
-  $description = '30 litros';
-
-  /* $sql = 'INSERT INTO products (name, description) VALUES (?, ?)';
-  $query = $pdo->prepare($sql);
-  $query->bindValue(1, $name);
-  $query->bindValue(2, $description);
-  var_dump($query->execute()); */
+  $pdo->beginTransaction();
+  $name = 'Geladeira';
+  $description = 'Brastemp';
 
   $sql = 'INSERT INTO products (name, description) VALUES (:name, :description)';
   $query = $pdo->prepare($sql);
   $query->bindValue(':name', $name);
   $query->bindValue(':description', $description);
-  var_dump($query->execute());
+  $insert = $query->execute();
+
+  if ($insert) {
+    $pdo->commit();
+  } else {
+    $pdo->rollBack();
+  }
   
 } catch (Throwable | PDOException $e) {
 
