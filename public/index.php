@@ -18,13 +18,17 @@ try {
   /* $name = 'Gravador';
   $description = 'Portátil';
   $update = $pdo->exec("UPDATE products SET name = '{$name}',description ='{$description}' WHERE id <> 5"); */
-  $query = $pdo->query("SELECT * FROM products");
+  /* $query = $pdo->query("SELECT * FROM products");
   $products = $query->fetchAll();
   foreach ($products as $product) {
     echo $product['name'] . '<br>';
-  }
+  } */
   //var_dump($query->fetchAll());
-
+  $name = 'Copo';
+  $description = 'Descartável';
+  $sql = "INSERT INTO products (name, description) VALUES ('{$name}', '{$description}');";
+  $insert = $pdo->query($sql);
+  var_dump($insert);
 } catch (Throwable | PDOException $e) {
 
   echo $e->getCode() . '<br>';
