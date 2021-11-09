@@ -12,8 +12,7 @@ try {
   $pdo = new PDO("{$dsn}:host={$host};port={$port};dbname={$database}", $user, $password);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $pdo->beginTransaction();
-  $name = 'Geladeira';
+  /* $name = 'Geladeira';
   $description = 'Brastemp';
 
   $sql = 'INSERT INTO products (name, description) VALUES (:name, :description)';
@@ -22,7 +21,20 @@ try {
   $query->bindParam(':description', $description);
   $query->execute();
 
-  echo $pdo->lastInsertId();
+  echo $pdo->lastInsertId(); */
+
+  $query = $pdo->prepare('SELECT * FROM products');
+  $query->execute();
+
+  $qtd = $query->rowCount();
+  if ($qtd > 0) {
+    $products = $query->fetchAll();
+    foreach ($products as $product) {
+      echo "{$product['id']} - {$product['name']} - {$product['description']} <br>";
+    }
+  } else {
+    echo 'Nenhum resultado...';
+  }
 
   
 } catch (Throwable | PDOException $e) {
