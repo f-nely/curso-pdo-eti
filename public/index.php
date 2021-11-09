@@ -23,7 +23,7 @@ try {
 
   echo $pdo->lastInsertId(); */
 
-  $query = $pdo->prepare('SELECT * FROM products');
+  /* $query = $pdo->prepare('SELECT * FROM products');
   $query->execute();
 
   $qtd = $query->rowCount();
@@ -34,8 +34,9 @@ try {
     }
   } else {
     echo 'Nenhum resultado...';
-  }
+  } */
 
+  var_dump(PDO::getAvailableDrivers());
   
 } catch (Throwable | PDOException $e) {
 
