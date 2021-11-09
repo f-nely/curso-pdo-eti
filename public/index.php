@@ -18,15 +18,12 @@ try {
 
   $sql = 'INSERT INTO products (name, description) VALUES (:name, :description)';
   $query = $pdo->prepare($sql);
-  $query->bindValue(':name', $name);
-  $query->bindValue(':description', $description);
-  $insert = $query->execute();
+  $query->bindParam(':name', $name);
+  $query->bindParam(':description', $description);
+  $query->execute();
 
-  if ($insert) {
-    $pdo->commit();
-  } else {
-    $pdo->rollBack();
-  }
+  echo $pdo->lastInsertId();
+
   
 } catch (Throwable | PDOException $e) {
 
