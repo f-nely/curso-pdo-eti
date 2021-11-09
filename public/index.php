@@ -12,23 +12,21 @@ try {
   $pdo = new PDO("{$dsn}:host={$host};port={$port};dbname={$database}", $user, $password);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  /* $sql = "INSERT INTO products (name, description) VALUES ('Copo', 'Descartável')";
-  $insert = $pdo->exec($sql); */
+  $name = 'Microondas';
+  $description = '30 litros';
 
-  /* $name = 'Gravador';
-  $description = 'Portátil';
-  $update = $pdo->exec("UPDATE products SET name = '{$name}',description ='{$description}' WHERE id <> 5"); */
-  /* $query = $pdo->query("SELECT * FROM products");
-  $products = $query->fetchAll();
-  foreach ($products as $product) {
-    echo $product['name'] . '<br>';
-  } */
-  //var_dump($query->fetchAll());
-  $name = 'Copo';
-  $description = 'Descartável';
-  $sql = "INSERT INTO products (name, description) VALUES ('{$name}', '{$description}');";
-  $insert = $pdo->query($sql);
-  var_dump($insert);
+  /* $sql = 'INSERT INTO products (name, description) VALUES (?, ?)';
+  $query = $pdo->prepare($sql);
+  $query->bindValue(1, $name);
+  $query->bindValue(2, $description);
+  var_dump($query->execute()); */
+
+  $sql = 'INSERT INTO products (name, description) VALUES (:name, :description)';
+  $query = $pdo->prepare($sql);
+  $query->bindValue(':name', $name);
+  $query->bindValue(':description', $description);
+  var_dump($query->execute());
+  
 } catch (Throwable | PDOException $e) {
 
   echo $e->getCode() . '<br>';
