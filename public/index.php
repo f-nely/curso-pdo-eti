@@ -9,10 +9,13 @@ $port = 3306;
 
 try {
 
-  $pdo = new PDO("{$dsn}:host={$host};port={$port};database={$database}", $user, $password);
+  $pdo = new PDO("{$dsn}:host={$host};port={$port};dbname={$database}", $user, $password);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  var_dump($pdo);
+  $sql = "INSERT INTO products (name, description) VALUES ('Copo', 'Descartável')";
+  $insert = $pdo->exec($sql);
+  var_dump($insert);
+
 } catch (Throwable | PDOException $e) {
 
   echo $e->getCode() . '<br>';
